@@ -1,5 +1,9 @@
 
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
 import os.path
+import random
 import json
 from twitter import Twitter, OAuth, TwitterHTTPError
 
@@ -51,5 +55,13 @@ def tweet_plain_text(text, oauth):
 
 def tweet_next(filename, oauth):
     content, t = rotate_from_file(filename)
-    tweet_plain_text(content, oauth)
-    # TODO :) catch 403 and append ⚡ or another random emoji until it is not a duplicate tweet anymore
+    try:
+        tweet_plain_text(content, oauth)
+    except Exception as e:
+        if e.response_data['errors'][0]['code'] == 187: # duplicate tweet, retry once for now
+            choices = ['⚡', '⭐', '☕', '✨', '⚓']
+            augmented = content + random.choice(choices)
+            print('Duplicate tweet found, retrying with: '+augmented)
+            tweet_plain_text(augmented, oauth)
+        else:
+            raise
