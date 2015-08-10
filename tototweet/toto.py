@@ -27,7 +27,7 @@ def rotate_from_file(filename, save=True, save_as=None,
         data['nextId'] = nextnext_id
         if save_as is None:
             save_as = filename
-        json.dump(data, open(save_as, 'w'), sort_keys = False, indent = 4, ensure_ascii=False)
+        json.dump(data, open(save_as, 'w'), sort_keys = True, indent = 4, ensure_ascii=False)
 
     t = tweets[next_i]
     return t[k_content], t
@@ -52,3 +52,4 @@ def tweet_plain_text(text, oauth):
 def tweet_next(filename, oauth):
     content, t = rotate_from_file(filename)
     tweet_plain_text(content, oauth)
+    # TODO :) catch 403 and append ⚡ or another random emoji until it is not a duplicate tweet anymore
