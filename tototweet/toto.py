@@ -7,7 +7,7 @@ def rotate_from_file(filename, save=True, save_as=None,
                      k_dummy='dummy', k_tweets='tweets', k_id='id',
                      k_next_id='nextId', k_content='content'):
     def is_dummy(tweet):
-        return tweet.has_key(k_dummy)
+        return k_dummy in tweet
     
     data = json.load(open(filename))
     tweets = [t for t in data[k_tweets] if not is_dummy(t)]
