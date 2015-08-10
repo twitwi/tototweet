@@ -1,0 +1,18 @@
+{
+    "tweets": [
+        {
+            "content": "first example tweet", 
+            "id": "t1"
+        }, 
+        {
+            "content": "test 2 of a lot more", 
+            "id": "t2"
+        }, 
+        {
+            "content": "test 3 of a lot more", 
+            "id": "t3"
+        }
+    ], 
+    "nextId": "t3", 
+    "title": "This is just an example."
+}
