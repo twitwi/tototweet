@@ -77,7 +77,8 @@ def tweet_next(filename, oauth):
         if e.response_data['errors'][0]['code'] == 187: # duplicate tweet, retry once for now
             choices = ['⚡', '⭐', '☕', '✨', '⚓']
             augmented = content + random.choice(choices)
-            print('Duplicate tweet found, retrying with: '+augmented)
+            #print('Duplicate tweet found, retrying with: ')
+            #print(augmented)
             tweet_plain_text(augmented, oauth)
         else:
             raise
