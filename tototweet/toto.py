@@ -8,15 +8,32 @@ import random
 import json
 from twitter import Twitter, OAuth, TwitterHTTPError
 
-def rotate_from_file(filename, save=True, save_as=None,
-                     k_dummy='dummy', k_tweets='tweets', k_id='id',
-                     k_next_id='nextId', k_content='content'):
-    def is_dummy(tweet):
-        return k_dummy in tweet
-    
-    data = json.load(open(filename, 'r', encoding='utf-8'))
-    tweets = [t for t in data[k_tweets] if not is_dummy(t)]
+k_dummy='dummy'
+k_tweets='tweets'
+k_id='id'
+k_next_id='nextId'
+k_content='content'
+
+def read_feed_file(filename):
+    return json.load(open(filename, 'r', encoding='utf-8'))
+
+def save_feed_to_file(data, save_as):
+     with open(save_as, 'w', encoding='utf-8') as f_out:
+         srep = json.dumps(data, sort_keys=True, indent=4, ensure_ascii=False)
+         f_out.write(srep)
+
+def is_dummy(tweet, k_dummy='dummy'):
+    return k_dummy in tweet
+
+def data_tweets_ids(filename):
+    data = read_feed_file(filename)
+    tweets = [t for t in data[k_tweets] if not is_dummy(t, k_dummy)]
     ids = [t[k_id] for t in tweets]
+    return data, tweets, ids
+
+def rotate_from_file(filename, save=True, save_as=None):
+    
+    data, tweets, ids = toto.data_tweets_ids(filename)
 
     assert len(set(ids)) == len(ids), "IDs should be unique, found duplicates " + str({k: v for k in set(ids) for v in [ids.count(k)] if v > 1})
 
@@ -32,9 +49,7 @@ def rotate_from_file(filename, save=True, save_as=None,
         data[k_next_id] = nextnext_id
         if save_as is None:
             save_as = filename
-        with open(save_as, 'w', encoding='utf-8') as f_out:
-            srep = json.dumps(data, sort_keys=True, indent=4, ensure_ascii=False)
-            f_out.write(srep)
+        save_feed_to_file(data, save_as)
 
     t = tweets[next_i]
     return t[k_content], t
