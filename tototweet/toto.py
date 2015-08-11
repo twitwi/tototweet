@@ -1,6 +1,7 @@
 
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+from io import open
 
 import os.path
 import random
@@ -13,7 +14,7 @@ def rotate_from_file(filename, save=True, save_as=None,
     def is_dummy(tweet):
         return k_dummy in tweet
     
-    data = json.load(open(filename), encoding='utf-8')
+    data = json.load(open(filename, 'r'))
     tweets = [t for t in data[k_tweets] if not is_dummy(t)]
     ids = [t[k_id] for t in tweets]
 
@@ -31,7 +32,9 @@ def rotate_from_file(filename, save=True, save_as=None,
         data[k_next_id] = nextnext_id
         if save_as is None:
             save_as = filename
-        json.dump(data, open(save_as, 'w'), sort_keys = True, indent = 4, ensure_ascii=False, encoding='utf-8')
+        with open(save_as, 'w') as f_out:
+            srep = json.dumps(data, sort_keys=True, indent=4, ensure_ascii=False)
+            f_out.write(srep)
 
     t = tweets[next_i]
     return t[k_content], t
