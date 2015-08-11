@@ -14,7 +14,7 @@ def rotate_from_file(filename, save=True, save_as=None,
     def is_dummy(tweet):
         return k_dummy in tweet
     
-    data = json.load(open(filename, 'r'))
+    data = json.load(open(filename, 'r', encoding='utf-8'))
     tweets = [t for t in data[k_tweets] if not is_dummy(t)]
     ids = [t[k_id] for t in tweets]
 
@@ -32,7 +32,7 @@ def rotate_from_file(filename, save=True, save_as=None,
         data[k_next_id] = nextnext_id
         if save_as is None:
             save_as = filename
-        with open(save_as, 'w') as f_out:
+        with open(save_as, 'w', encoding='utf-8') as f_out:
             srep = json.dumps(data, sort_keys=True, indent=4, ensure_ascii=False)
             f_out.write(srep)
 
