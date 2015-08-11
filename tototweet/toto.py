@@ -31,7 +31,7 @@ def rotate_from_file(filename, save=True, save_as=None,
         data['nextId'] = nextnext_id
         if save_as is None:
             save_as = filename
-        json.dump(data, open(save_as, 'w'), sort_keys = True, indent = 4, ensure_ascii=False)
+        json.dump(data, open(save_as, 'w'), sort_keys = True, indent = 4, ensure_ascii=False, encoding='utf-8')
 
     t = tweets[next_i]
     return t[k_content], t
