@@ -32,9 +32,7 @@ def data_tweets_ids(filename):
     return data, tweets, ids
 
 def rotate_from_file(filename, save=True, save_as=None):
-    
-    data, tweets, ids = toto.data_tweets_ids(filename)
-
+    data, tweets, ids = data_tweets_ids(filename)
     assert len(set(ids)) == len(ids), "IDs should be unique, found duplicates " + str({k: v for k in set(ids) for v in [ids.count(k)] if v > 1})
 
     next_id = data[k_next_id]
