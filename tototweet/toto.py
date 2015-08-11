@@ -13,7 +13,7 @@ def rotate_from_file(filename, save=True, save_as=None,
     def is_dummy(tweet):
         return k_dummy in tweet
     
-    data = json.load(open(filename))
+    data = json.load(open(filename), encoding='utf-8')
     tweets = [t for t in data[k_tweets] if not is_dummy(t)]
     ids = [t[k_id] for t in tweets]
 
